@@ -1,0 +1,360 @@
+@import "stylesheets/variables.css";
+
+.ei-activity-view {
+  @nest & .row {
+    margin: 0;
+  }
+
+  @nest & .activity-view-container {
+    margin: 0;
+    padding: 10px;
+    background: #cacaca;
+
+    @nest & .activity-view-left {
+      padding: 0;
+
+      @nest & .row.activity-images-box {
+        height: 260px;
+        overflow: hidden;
+        margin: 0 0 10px;
+
+        @nest & .activity-no-image, & .activity-single-img, & #activity-view-carousel {
+          background: #dfdfe8;
+        }
+
+        @nest & .activity-single-img {
+          width: 100%;
+          height: 100%;
+          position: relative;
+        }
+
+        @nest & .activity-no-image {
+          height: 100%;
+        }
+
+        @nest & #activity-view-carousel {
+          height: 100%;
+          padding: 0;
+          border-right: 1px solid #fff;
+          background: #555;
+          display: inline-block;
+          float: left;
+
+          @nest &.four-thumbnails {
+            width: 350px;
+          }
+
+          @nest & .carousel-inner {
+            height: 100%;
+
+            @nest & .carousel-item {
+              height: 100%;
+
+              @nest & img {
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        @media screen and (max-width: 575px) {
+          @nest & #activity-view-carousel {
+            width: 100%;
+            border-right: none;
+          }
+        }
+
+        @media screen and (min-width: 576px) and (max-width: 1200px) {
+          @nest & #activity-view-carousel {
+            width: 340px;
+
+            @nest &.four-thumbnails {
+              width: 210px;
+            }
+          }
+        }
+
+        @media screen and (min-width: 1201px) and (max-width: 1440px) {
+          @nest & #activity-view-carousel {
+            width: 430px;
+
+            @nest &.four-thumbnails {
+              width: 300px;
+            }
+          }
+        }
+
+        @media screen and (min-width: 1441px) {
+          @nest & #activity-view-carousel {
+            width: 480px;
+
+            @nest &.four-thumbnails {
+              width: 350px;
+            }
+          }
+        }
+
+        @nest & .activity-thumbnails {
+          height: 100%;
+          padding: 0;
+          display: inline-block;
+          float: left;
+
+          @nest & .activity-thumbnail {
+            width: 130px;
+            height: 130px;
+            overflow: hidden;
+            position: relative;
+
+            @nest &:nth-child(2), &:nth-child(4) {
+              border-top: 1px solid #fff;
+            }
+
+            @nest & img {
+              height: 100%;
+              width: auto;
+            }
+          }
+
+          @media screen and (max-width: 574px) {
+            /* do not show thumbnails for smaller screens */
+            @nest & .activity-thumbnail {
+              display: none;
+            }
+          }
+        }
+
+        @nest & img {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+        }
+      }
+
+      @nest & .activity-info.card {
+        @nest & section {
+          padding: 26px;
+
+          @nest & h6 {
+            font-family: var(--font-opensans-semibold);
+            font-size: 15px;
+          }
+
+          @nest & .description {
+            font-size: 13px;
+            color: #0a0b09;
+          }
+
+          @nest &.main-info {
+            border-bottom: 1px solid #cacaca;
+
+            @nest & .activity-title {
+              color: #000;
+            }
+
+            @nest & .activity-city {
+              color: #4a4a4a;
+            }
+
+            @nest & .rating-price-box {
+              margin-bottom: 15px;
+              padding-left: 0;
+
+              @nest & .activity-rating {
+                height: 24px;
+                display: inline-block;
+                margin-bottom: 30px;
+
+                @nest & .rating-filled, .rating-empty, .rating-half {
+                  width: 20px;
+                  height: 16px;
+                  display: inline-block;
+                  float: left;
+
+                  @nest &:after {
+                    font: normal normal normal 14px/1 FontAwesome;
+                    font-size: inherit;
+                    text-rendering: auto;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                  }
+                }
+
+                @nest & .rating-filled {
+                  @nest &:after {
+                    color: #f40b0b;
+                    content: "\F004";
+                  }
+                }
+
+                @nest & .rating-empty {
+                  @nest &:after {
+                    color: #cacaca;
+                    content: "\F004";
+                  }
+                }
+
+                @nest & .rating-half {
+                  @nest &:after {
+                    content: "\F123";
+                  }
+                }
+              }
+
+              @nest & .activity-price-box {
+                display: block;
+                float: right;
+                padding-right: 3px 8px 0 0;
+
+                @nest & .from {
+                  color: #666;
+                  font-family: var(--font-opensans-light);
+                  font-size: 14px;
+                  display: block;
+                }
+
+                @nest & .price {
+                  display: block;
+
+                  @nest & .total {
+                    font-family: var(--font-opensans-semibold);
+                    font-size: 35px;
+                    text-align: left;
+                    display: inline-block;
+                  }
+
+                  @nest & .currency {
+                    font-family: var(--font-opensans-regular);
+                    font-size: 19px;
+                    text-transform: uppercase;
+                    display: inline-block;
+                  }
+                }
+
+                @nest & .person {
+                  font-family: var(--font-opensans-light);
+                  font-size: 10px;
+                  color: #999;
+                  float: right;
+                }
+              }
+            }
+
+            @nest & .activity-description {
+              color: #0a0b09;
+            }
+          }
+        }
+
+        @nest & .additional-info-section {
+          font-size: 13px;
+
+          @nest & .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 15px;
+          }
+
+          @nest & .additional-info {
+            padding: 20px 26px;
+            border-bottom: 1px solid #cacaca;
+          }
+        }
+      }
+    }
+
+    @nest & .activity-view-right {
+      padding: 0 0 0 5px;
+
+      @nest & .pax-info {
+        display: block;
+        background: #fff;
+        min-height: 350px;
+        margin-left: 2px;
+        width: 49%;
+
+        @nest & .ei-datepicker {
+          padding-top: 10px;
+          width: 200px;
+          margin: 0 auto;
+
+          @nest & .form-control {
+            height: 0;
+            padding: 0;
+            visibility: hidden;
+          }
+        }
+
+        @nest & .message-group {
+          min-height: 60px;
+          font-size: 13px;
+          padding: 15px 0;
+        }
+
+        @nest & .select-group {
+          height: 60px;
+
+          @nest & .select-label {
+            position: relative;
+            left: 10px;
+            line-height: 60px;
+            font-size: 14px;
+            padding: 0;
+          }
+
+          @nest & .select-dropdown {
+            line-height: 60px;
+
+            @nest & .bootstrap-select .btn {
+              position: relative;
+              left: -30px;
+              width: 68px;
+              border: 2px solid #cacaca;
+            }
+          }
+
+          @nest & .dropdown-toggle::after {
+            border-top: 0;
+            border-right: 0;
+            border-left: 0;
+          }
+        }
+      }
+
+      @nest & .pax-info:last-child {
+        float: right;
+      }
+
+      @nest & .availability-info {
+        background-color: #777;
+
+        @nest & .message {
+          color: #fff;
+          font-size: 15px;
+          margin-top: 15px;
+        }
+
+        @nest & button {
+          margin: 10px 0 10px 10px;
+        }
+      }
+
+      @nest & .slogan {
+        color: #989898;
+        text-align: center;
+        font-size: 18px;
+        margin-top: 150px;
+      }
+    }
+  }
+}
+
+.daterangepicker.show-calendar {
+  display: block !important;
+
+  @nest &.opensright::before, &.opensright::after {
+    display: none;
+  }
+}

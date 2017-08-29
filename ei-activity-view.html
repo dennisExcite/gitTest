@@ -1,0 +1,221 @@
+<div class="ei-activity-view">
+    <ei-activity-item-data params="
+        activity: activity,
+        search: search,
+        isProcessingSearch: isProcessingSearch
+    "></ei-activity-item-data>
+    <!-- ko if: isProcessingSearch -->
+    <div class="row activity-view-loading">
+        <ei-loading-message params="
+            message: 'activity_view_loading_message' | translate
+        "></ei-loading-message>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: isProcessingSearch() === false && !activityItem -->
+    <div class="col-xs-12 result-message-container">
+        <span class="result-message" data-bind="html: 'SBA_no_hotel_result_message' | translate"></span>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: isProcessingSearch() === false && activityItem -->
+    <div class="activity-view-container row" data-bind="pageTitle: activityItem.name">
+        <div class="activity-view-left col-xs-6">
+            <div class="activity-images-box row">
+                <!-- ko if: activityItem.images.length === 1 -->
+                <div class="activity-single-img col-xs-12">
+                    <img class="img-fluid" alt="activity image" data-bind="attr: { src: activityItem.images[0]['urlFull'] }"/>
+                </div>
+                <!-- /ko -->
+                <!-- ko if: activityItem.images.length > 1 -->
+                <div id="activity-view-carousel" class="col-xs-12 carousel slide" data-ride="carousel" data-bind="template: {
+                        afterRender: afterRender($component, $element)
+                    }, css: { 'four-thumbnails': activityItem.images.length === 4 }">
+                    <div class="carousel-inner" role="listbox" data-bind="foreach: { data:  activityItem.images, as: 'image' }">
+                        <div class="item carousel-item" data-bind="css: { active: $index() === 0 }">
+                            <img class="d-block img-fluid" alt="activity image" data-bind="attr: { src: image.urlFull }"/>
+                            <span class="mask">&nbsp;</span>
+                        </div>
+                    </div>
+                    <a class="left carousel-control prev-link" href="#activity-view-carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="right carousel-control next-link" href="#activity-view-carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div class="activity-thumbnails" data-bind="foreach: { data: activityItem.images, as: 'image' }">
+                    <div class="activity-thumbnail">
+                        <img alt="activity thumbnail" data-target="#activity-view-carousel" data-bind="attr: { src: image.urlFull, data-slide-to: $index }"/>
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+            <div class="activity-info card">
+                <section class="main-info">
+                    <h4 class="activity-title" data-bind="text: activityItem.name | fit: 60"></h4>
+                    <h5 class="activity-city" data-bind="text: activityItem.city"></h5>
+                    <div class="row">
+                        <div class="col-xs-12 rating-price-box">
+                            <div class="activity-rating" data-bind="rating: activityItem.rating"></div>
+                            <div class="activity-price-box">
+                                <span class="from">From</span>
+                                <div class="price">
+                                    <span class="total" data-bind="text: activityItem.lowestPrice"></span>
+                                    <span class="currency" data-bind="text: activityItem.lowestPriceCurrency"></span>
+                                </div>
+                                <span class="person">
+                                    Per person price
+                                </span>
+                            </div>
+                        </div>
+                        </div>
+                    <div class="activity-description description">
+                        <p data-bind="text: activityItem.shortDescription"></p>
+                    </div>
+                </section>
+
+                <div data-bind="with: activityItem" class="additional-info-section">
+                    <section class="additional-info">
+                        <h4 class="section-title">What You Can Expect</h4>
+                        <p data-bind="text: generalDescription"></p>
+                    </section>
+
+                    <!-- ko if: additionalInformation -->
+                    <section class="additional-info">
+                        <!-- ko if: additionalInformation.departure_point -->
+                        <h4 class="section-title">Departure Point</h4>
+                        <p data-bind="text: additionalInformation.departure_point"></p>
+                        <!-- /ko -->
+
+                        <!-- ko if: additionalInformation.departure_time -->
+                        <h4 class="section-title">Departure Time</h4>
+                        <p data-bind="text: additionalInformation.departure_time"></p>
+                        <!-- /ko -->
+
+                        <!-- ko if: additionalInformation.departure_time_comments -->
+                        <h4 class="section-title">Departure Time Comments</h4>
+                        <p data-bind="text: additionalInformation.departure_time_comments"></p>
+                        <!-- /ko -->
+
+                        <!-- ko if: additionalInformation.operates -->
+                        <h4 class="section-title">Operation</h4>
+                        <p data-bind="text: additionalInformation.operates"></p>
+                        <!-- /ko -->
+                    </section>
+
+                    <!-- ko if: additionalInformation.additional_info -->
+                    <section class="additional-info">
+                        <h4 class="section-title">Additional Info</h4>
+                        <p data-bind="text: additionalInformation.additional_info"></p>
+                    </section>
+                    <!-- /ko -->
+
+                    <!-- /ko -->
+                </div>
+
+
+            </div>
+        </div>
+        <div class="activity-view-right col-xs-6">
+            <div class="row">
+                <div class="col-sm-6 pax-info">
+                    <div class="datapicker-container">
+                        <ei-datepicker params="
+                            date: date,
+                            options: calendarOptions
+                        "></ei-datepicker>
+                    </div>
+                </div>
+                <div class="col-sm-6 pax-info">
+
+                    <div class="message-group row">
+                        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.</span>
+                    </div>
+
+                    <div class="select-group row">
+                        <div class="select-label col-sm-8">
+                            Adult (Age 13+)
+                        </div>
+                        <div class="select-dropdown col-sm-4">
+                            <ei-select class="ei-select" params="
+                                options: numberOfGuest,
+                                value: 'adult',
+                            "></ei-select>
+                        </div>
+                    </div>
+
+                    <div class="select-group row">
+                        <div class="select-label col-sm-8">
+                            Seniors (Age 13+)
+                        </div>
+                        <div class="select-dropdown col-sm-4">
+                            <ei-select class="ei-select" params="
+                                options: numberOfGuest,
+                                value: 'adult',
+                            "></ei-select>
+                        </div>
+                    </div>
+
+                    <div class="select-group row">
+                        <div class="select-label col-sm-8">
+                            Youth (Age 13+)
+                        </div>
+                        <div class="select-dropdown col-sm-4">
+                            <ei-select class="ei-select" params="
+                                options: numberOfGuest,
+                                value: 'adult',
+                            "></ei-select>
+                        </div>
+                    </div>
+
+                    <div class="select-group row">
+                        <div class="select-label col-sm-8">
+                            Child (Age 13+)
+                        </div>
+                        <div class="select-dropdown col-sm-4">
+                            <ei-select class="ei-select" params="
+                                options: numberOfGuest,
+                                value: 'adult',
+                            "></ei-select>
+                        </div>
+                    </div>
+
+                    <!--<div class="select-group row">-->
+                        <!--<div class="select-label col-sm-8">-->
+                            <!--Infant (Age 13+)-->
+                        <!--</div>-->
+                        <!--<div class="select-dropdown col-sm-4">-->
+                            <!--<ei-select class="ei-select" params="-->
+                                <!--options: numberOfGuest,-->
+                                <!--value: 'adult',-->
+                            <!--"></ei-select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                </div>
+            </div>
+            <div class="row availability-info">
+                <div class="col-xs-6 message">
+                    Please select the date and travellers
+                </div>
+                <div class="col-xs-6">
+                    <ei-button params="
+                        text: 'CHECK AVAILABILITY'
+                    "></ei-button>
+                </div>
+            </div>
+            <div class="row slogan">
+                <div class="col-xs-12">
+                    <div>"Create an unforgettable holiday experience </div>
+                    <div>with over 30,000 activities to choose from!"</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <ei-summary-footer params="
+                navigateTo: 'activity-summary'
+            ">
+            </ei-summary-footer>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
